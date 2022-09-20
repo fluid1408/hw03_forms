@@ -50,10 +50,10 @@ def post_detail(request, post_id):
 
 @login_required
 def post_create(request):
+    form = PostForm(request.POST or None)
     is_edit = False
     template = "posts/create_post.html"
     if form.is_valid():
-        form = PostForm(request.POST or None)
         post = form.save(commit=False)
         post.author = request.user
         post.save()
@@ -69,9 +69,9 @@ def post_create(request):
 def post_edit(request, pk):
     template = "posts/create_post.html"
     post = get_object_or_404(Post, pk=pk)
-    form = PostForm(request.POST or None, instance=post)
     if request.user != post.author:
         return redirect("posts:post_detail", post_id=pk)
+    form = PostForm(request.POST or None, instance=post)
     if form.is_valid():
         post.save()
         return redirect("posts:post_detail", post_id=pk)

@@ -19,7 +19,7 @@
             href="{% url 'posts:profile' user.username %}">{{ post.author.get_full_name }}</a>
         </li>
         <li class="list-group-item d-flex justify-content-between align-items-center">
-          Всего постов автора: <span>{{ post_count }}</span>
+          Всего постов автора: <span>{{ post_count.count }}</span>
         </li>
       </ul>
     </aside>

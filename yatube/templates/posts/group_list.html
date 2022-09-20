@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block title %}Последние обновления{% endblock %}
+{% block content %}
+  <h1>{{ group.title }}</h1>
+  <p>{{ group.description }}</p>
+  {% for post in page_obj %}
+    {% include 'includes/profile _emplate.html' %}
+  {% endfor %}
+{% endblock %}

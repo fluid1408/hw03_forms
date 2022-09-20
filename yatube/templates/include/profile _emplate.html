@@ -1,0 +1,22 @@
+<ul>
+    <li>
+      Автор: <a
+        href="{% url 'posts:profile' user.username %}">{{ post.author.username }}</a>
+    </li>
+    <li>
+      Дата публикации: {{ post.pub_date|date:"d E Y" }}
+    </li>
+  </ul>
+  <p>{{ post.text|linebreaksbr }}</p>
+  {% if not group and post.group %}
+    <a href="{% url 'posts:post_detail' post.id %}">подробная информация</a>
+    <br>
+  {% endif %}
+  {%  if not post.group %}
+  {% if post.author == request.user %}
+            <a href="{% url 'posts:post_edit' post.id %}">Редактировать пост</a>
+          {% endif %}
+  {% endif %}
+  {% if not forloop.last %}
+    <hr>
+  {% endif %}

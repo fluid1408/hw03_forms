@@ -27,23 +27,21 @@ def group_posts(request, slug):
 
 
 def profile(request, username):
-    user = User.objects.get(username=username)
     template = "posts/profile.html"
-    posts = user.posts.select_related("group")
+    user = User.objects.get(username=username)
     context = {
-        "post_count": posts.count(),
         "author": user,
-        "page_obj": paginator_posts(posts, request),
+        "page_obj": paginator_posts(user.posts.select_related("group"), 
+        request),
     }
     return render(request, template, context)
 
 
 def post_detail(request, post_id):
-    post = get_object_or_404(Post, id=post_id)
     template = "posts/post_detail.html"
+    post = get_object_or_404(Post, id=post_id)
     context = {
         "post": post,
-        "post_count": post.author.posts.count(),
     }
     return render(request, template, context)
 

@@ -1,7 +1,8 @@
 {% extends 'base.html' %}
 {% block title %}Последние обновления{% endblock %}
 {% block content %}
-{% for post in page_obj %}
-  {% include 'include/profile_emplate.html' %}
-{% endfor %}
+  <h1>Последние обновления</h1>
+  {% for post in page_obj %}
+    {% include 'include/profile_emplate.html' %}
+  {% endfor %}
 {% endblock %}

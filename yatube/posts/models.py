@@ -6,7 +6,7 @@ User = get_user_model()
 
 class Group(models.Model):
     title = models.CharField(max_length=200, verbose_name="Название")
-    slug = models.SlugField(unique=True, verbose_name="URL")
+    slug = models.SlugField(unique=True, verbose_name="Ссылка")
     description = models.TextField(verbose_name="Описание")
 
     def __str__(self):
@@ -14,10 +14,15 @@ class Group(models.Model):
 
 
 class Post(models.Model):
-    text = models.TextField()
-    pub_date = models.DateTimeField(auto_now_add=True)
+    text = models.TextField(verbose_name="Текст поста")
+    pub_date = models.DateTimeField(
+        auto_now_add=True, verbose_name="Дата публикации"
+    )
     author = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name="posts"
+        User,
+        on_delete=models.CASCADE,
+        related_name="posts",
+        verbose_name="Автор",
     )
     group = models.ForeignKey(
         Group,
@@ -25,10 +30,12 @@ class Post(models.Model):
         null=True,
         on_delete=models.SET_NULL,
         related_name="posts",
+        verbose_name="Группа",
+        help_text="Группа, к которой будет относиться пост",
     )
 
     class Meta:
         ordering = ("-pub_date",)
 
-    def __str__(self):
+    def str(self):
         return self.text[:15]

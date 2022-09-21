@@ -70,8 +70,8 @@ def post_edit(request, pk):
     template = "posts/create_post.html"
     post = get_object_or_404(Post, pk=pk)
     if request.user != post.author:
-        form = PostForm(request.POST or None, instance=post)
         return redirect("posts:post_detail", post_id=pk)
+    form = PostForm(request.POST or None, instance=post)
     if form.is_valid():
         post.save()
         return redirect("posts:post_detail", post_id=pk)

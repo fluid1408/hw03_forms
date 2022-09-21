@@ -1,7 +1,7 @@
 <ul>
     <li>
       Автор: <a
-        href="{% url 'posts:profile' user.username %}">{{ post.author.username }}</a>
+            href="{% url 'posts:profile' post.author %}">{{ post.author.username }}</a>
     </li>
     <li>
       Дата публикации: {{ post.pub_date|date:"d E Y" }}

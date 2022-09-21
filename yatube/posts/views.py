@@ -31,8 +31,9 @@ def profile(request, username):
     user = User.objects.get(username=username)
     context = {
         "author": user,
-        "page_obj": paginator_posts(user.posts.select_related("group"), 
-        request),
+        "page_obj": paginator_posts(
+            user.posts.select_related("group"), request
+        ),
     }
     return render(request, template, context)
 

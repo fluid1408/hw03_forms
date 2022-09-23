@@ -1,7 +1,7 @@
 <ul>
   <li>
     Автор: <a
-      href="{% url 'posts:profile' post.author %}">{{ post.author.get_full_name }}</a>
+      href="{% url 'posts:profile' post.author.username %}">{{ post.author.get_full_name }}</a>
   </li>
   {% if not group and post.group %}
     <li>
@@ -13,6 +13,5 @@
       Дата публикации: {{ post.pub_date|date:"d E Y" }}
     </li>
   </ul>
-  <p>{{ post.text|linebreaksbr }}</p>
-  <li>
-    <a href="{% url 'posts:post_detail' post.id %}">подробная информация</a>
+<p>{{ post.text|linebreaksbr }}</p>
+<a href="{% url 'posts:post_detail' post.id %}">подробная информация</a>

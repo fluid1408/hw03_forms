@@ -5,5 +5,8 @@
   <p>{{ group.description|linebreaksbr }}</p>
   {% for post in page_obj %}
     {% include 'include/profile_emplate.html' %}
+    {% if not forloop.last %}
+    <hr>
+  {% endif %}
   {% endfor %}
 {% endblock %}

@@ -1,36 +1,34 @@
 {% extends 'base.html' %}
-{% block title %} Информация  о посте {{ post.id }}{% endblock %}
+{% block title %}Информация  о посте {{ post.id }}{% endblock %}
 {% block content %}
-  <div class="container py-5">
-    <div class="row">
-      <aside class="col-12 col-md-3">
-        <ul class="list-group list-group-flush">
+  <div class="row">
+    <aside class="col-12 col-md-3">
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+          Дата публикации: {{ post.pub_date|date:"d E Y" }}
+        </li>
           <li class="list-group-item">
-            Дата публикации: {{ post.pub_date|date:"d E Y" }}
+            Группа: <a
+            href="{% url 'posts:group_list' post.group.slug %}">{{ post.group }}</a>
           </li>
-            <li class="list-group-item">
-              Группа: <a
-              href="{% url 'posts:group_list' post.group.slug %}">{{ post.group }}</a>
-            </li>
-          <li class="list-group-item">
-            Автор: <a
-              href="{% url 'posts:profile' post.author %}">{{ post.author|stringformat:"username" }}</a>
-          </li>
-          <li class="list-group-item d-flex justify-content-between align-items-center">
-            Всего постов автора: <span>{{ post.author.posts.count }}</span>
-          </li>
-        </ul>
-      </aside>
-      <article class="col-12 col-md-9">
-        <p>
-          {{ post.text|linebreaksbr }}
-        </p>
-        <p>
-          {% if post.author == request.user %}
-            <a href="{% url 'posts:post_edit' post.id %}">Редактировать пост</a>
-          {% endif %}
-        </p>
-      </article>
-    </div>
+        <li class="list-group-item">
+          Автор: <a
+            href="{% url 'posts:profile' post.author %}">{{ post.author.username }}</a>
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          Всего постов автора: <span>{{ post.author.posts.count }}</span>
+        </li>
+      </ul>
+    </aside>
+    <article class="col-12 col-md-9">
+      <p>
+        {{ post.text|linebreaksbr }}
+      </p>
+      <p>
+        {% if post.author == request.user %}
+          <a href="{% url 'posts:post_edit' post.id %}">Редактировать пост</a>
+        {% endif %}
+      </p>
+    </article>
   </div>
 {% endblock %}

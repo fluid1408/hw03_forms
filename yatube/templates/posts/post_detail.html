@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% block title %}Информация  о посте {{ post.id }}{% endblock %}
+{% block title %}Информация  о посте {{ author.posts.get_full_name }}{% endblock %}
 {% block content %}
   <div class="row">
     <aside class="col-12 col-md-3">

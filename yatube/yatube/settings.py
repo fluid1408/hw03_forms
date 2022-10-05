@@ -25,7 +25,12 @@ SECRET_KEY = "epl#2+&4*pg((rd*p=lsa&6sq-$!!dy719eou_w68@*4hxml%r"
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1',
+    '[::1]',
+    'testserver',
+]
 
 
 # Application definition

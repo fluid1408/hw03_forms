@@ -13,8 +13,8 @@ class Group(models.Model):
         verbose_name = "Группа"
         verbose_name_plural = "Группы"
 
-    def __str__(self):
-        return self.title
+    def __str__(group):
+        return group.title
 
 
 class Post(models.Model):
@@ -43,5 +43,5 @@ class Post(models.Model):
         verbose_name = "Пост"
         verbose_name_plural = "Посты"
 
-    def str(self):
-        return self.text[:15]
+    def __str__(post):
+        return post.text[:15]

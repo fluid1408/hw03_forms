@@ -62,3 +62,31 @@ class PostURLTests(TestCase):
             with self.subTest(address=address):
                 response = self.client.get(address)
                 self.assertEqual(response.status_code, code_status)
+
+    def test_URLs_users_acces(self):
+        page_list = {
+        '/': HTTPStatus.OK,
+        '/create/': HTTPStatus.OK,
+        f'/posts/{self.post.pk}/': HTTPStatus.FOUND,
+        f'/posts/{self.post.id}/': HTTPStatus.OK,
+        f'/profile/{self.user}/': HTTPStatus.OK,
+        f'/group/{self.group.slug}/': HTTPStatus.OK,
+        }
+        for address, code_status in page_list.items():
+            with self.subTest(address=address):
+                response = self.authorized_client.get(address)
+                self.assertEqual(response.status_code, code_status)
+
+    def test_URLs_users_acces_author(self):
+        page_list = {
+        '/': HTTPStatus.OK,
+        '/create/': HTTPStatus.OK,
+        f'/posts/{self.post.pk}/': HTTPStatus.FOUND,
+        f'/posts/{self.post.id}/': HTTPStatus.OK,
+        f'/profile/{self.user}/': HTTPStatus.OK,
+        f'/group/{self.group.slug}/': HTTPStatus.OK,
+        }
+        for address, code_status in page_list.items():
+            with self.subTest(address=address):
+                response = self.author.get(address)
+                self.assertEqual(response.status_code, code_status)

@@ -31,12 +31,13 @@ class PostPagesTests(TestCase):
         with self.subTest(post=post):
             self.assertEqual(post.text, self.post.text)
             self.assertEqual(post.author, self.post.author)
-            self.assertEqual(post.group.title, self.post.group.title)
+            self.assertEqual(post.group, self.post.group)
 
     def test_index_page_show_correct_context(self):
         """Шаблон index.html сформирован с правильным контекстом."""
         response = self.authorized_client.get(reverse("posts:index"))
         self.check_post_info(response.context["page_obj"][0])
+
     def test_groups_page_show_correct_context(self):
         """Шаблон group_list.html сформирован с правильным контекстом."""
         response = self.authorized_client.get(
@@ -80,3 +81,35 @@ class PostPagesTests(TestCase):
                 form_field = response.context.get("form").fields.get(value)
                 self.assertIsInstance(form_field, expected)
     
+
+class PaginatorViewsTest(TestCase):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.user = User.objects.create(username="auth")
+        cls.group = Group.objects.create(
+            title="Тестовое название группы",
+            slug="test_slug",
+            description="Тестовое описание группы",
+        )
+        cls.TEST_POSTS = 15
+        paginator_objects = []
+        for i in range(cls.TEST_POSTS):
+            new_post = Post(
+                author=PaginatorViewsTest.user,
+                text="Тестовый пост" + str(i),
+                group=PaginatorViewsTest.group,
+            )
+            paginator_objects.append(new_post)
+        Post.objects.bulk_create(paginator_objects)
+
+    def setUp(self):
+        self.unauthorized_client = Client()
+
+    def test_first_page_contains_ten_records(self):
+        response = self.client.get(reverse('posts:index')) 
+        self.assertEqual(len(response.context['page_obj']), 10)
+
+    def test_second_page_contains_three_records(self):
+        response = self.client.get(reverse('posts:index') + '?page=2')
+        self.assertEqual(len(response.context['page_obj']), 5)

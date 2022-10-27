@@ -9,7 +9,7 @@ from django.urls import reverse
 
 User = get_user_model()
 
-# Создаем временную папку для медиа-файлов;
+# СОЗДАЕМ_ВРЕМЕННУЮ_ПАПКУ_ДЛЯ_МЕДИА_ФАЙЛОВ;
 # на момент теста медиа папка будет переопределена
 TEMP_MEDIA_ROOT = tempfile.mkdtemp(dir=settings.BASE_DIR)
 
